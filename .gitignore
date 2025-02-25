@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+@AutomationLog.txt
+
+# Environment
+venv/
+env/
+.env/

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>UIAutomation 使用指南</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            padding-left: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        pre {
+            margin: 0;
+            font-family: Consolas, monospace;
+        }
+        
+        .tip {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #03a9f4;
+        }
+        
+        .warning {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        /* 添加图标样式 */
+        .logo-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .ui-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 20px;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .ui-logo::before {
+            content: "UI";
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .ui-logo::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #e74c3c;
+            border-radius: 50%;
+            bottom: -5px;
+            right: -5px;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .logo-text {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 在标题前添加图标 -->
+        <div class="logo-container">
+            <div class="ui-logo"></div>
+            <div class="logo-text">UI Automation Tool</div>
+        </div>
+        
+        <h1>UIAutomation 使用指南</h1>
+
+        <h2>1. 基本元素定位</h2>
+        <div class="code-block">
+            <pre>
+import uiautomation as auto
+
+# 通过窗口标题和类名定位窗口
+window = auto.WindowControl(Name="记事本", ClassName="Notepad")
+
+# 通过控件类型和名称定位元素
+button = auto.ButtonControl(Name="确定")
+edit = auto.EditControl(Name="搜索框")</pre>
+        </div>
+
+        <h2>2. 简写形式</h2>
+        <div class="code-block">
+            <pre>
+# 完整形式
+window = auto.WindowControl(Name="记事本")
+# 简写形式
+window = auto.Window(Name="记事本")</pre>
+        </div>
+
+        <div class="tip">
+            <strong>提示：</strong> 简写形式可以让代码更简洁，但功能完全相同。
+        </div>
+
+        <h2>3. 常用控件类型</h2>
+        <div class="code-block">
+            <pre>
+auto.Window()  # 窗口
+auto.Button()  # 按钮
+auto.Edit()    # 编辑框
+auto.List()    # 列表
+auto.Tree()    # 树形控件
+auto.Menu()    # 菜单
+auto.Tab()     # 选项卡
+auto.Pane()    # 面板</pre>
+        </div>
+
+        <h2>4. 常用操作方法</h2>
+        <div class="code-block">
+            <pre>
+element.Click()         # 点击
+element.SendKeys("文本") # 发送文本
+element.GetChildren()   # 获取子元素
+element.GetParentControl() # 获取父元素
+element.Exists()       # 检查元素是否存在
+element.Name          # 获取元素名称
+element.ClassName     # 获取元素类名</pre>
+        </div>
+
+        <h2>5. 元素等待</h2>
+        <div class="code-block">
+            <pre>
+# 等待元素出现（最多等待10秒）
+element.Exists(10)
+
+# 设置全局搜索超时时间
+auto.uiautomation.SetGlobalSearchTimeout(10)</pre>
+        </div>
+
+        <div class="warning">
+            <strong>注意：</strong> 合理设置等待时间可以提高脚本的稳定性。
+        </div>
+
+        <h2>6. 链式调用</h2>
+        <div class="code-block">
+            <pre>
+# 逐层定位元素
+window = auto.Window(Name="微信")
+button = window.Pane().Pane().Button(Name="发送")</pre>
+        </div>
+
+        <h2>7. 获取元素位置和属性</h2>
+        <div class="code-block">
+            <pre>
+# 获取元素位置
+rect = element.BoundingRectangle
+print(f"位置: 左={rect.left}, 上={rect.top}, 右={rect.right}, 下={rect.bottom}")
+
+# 获取元素属性
+print(f"名称: {element.Name}")
+print(f"类名: {element.ClassName}")
+print(f"控件类型: {element.ControlTypeName}")
+print(f"自动化ID: {element.AutomationId}")</pre>
+        </div>
+
+        <h2>8. 调试工具</h2>
+        <div class="code-block">
+            <pre>
+# 显示元素详细信息
+auto.LogControl(element)
+
+# 获取鼠标位置下的元素
+element = auto.ControlFromPoint(x, y)</pre>
+        </div>
+
+        <div class="tip">
+            <strong>调试建议：</strong>
+            <ul>
+                <li>优先使用唯一标识定位元素（Name、ClassName、AutomationId）</li>
+                <li>使用 Exists() 检查元素是否存在</li>
+                <li>适当设置超时时间，避免程序卡死</li>
+                <li>使用链式调用时注意层级关系</li>
+                <li>调试时可以使用 LogControl 查看元素详细信息</li>
+            </ul>
+        </div>
+
+        <h2>9. 微信自动化测试案例</h2>
+        <div class="code-block">
+            <pre>
+# 点击收藏按钮
+auto.WindowControl(Name="微信", ClassName="WeChatMainWndForPC").Button(Name="收藏").Click()
+
+# 点击朋友圈按钮
+auto.WindowControl(Name="微信", ClassName="WeChatMainWndForPC").ButtonControl(Name="朋友圈").Click()
+
+# 在朋友圈界面点击评论按钮
+auto.WindowControl(Name="朋友圈", ClassName="SnsWnd").ButtonControl(Name="评论").Click()
+
+# 再次点击评论按钮（可能是为了确保评论框打开）
+auto.WindowControl(Name="朋友圈", ClassName="SnsWnd").ButtonControl(Name="评论").Click()
+
+# 输入评论内容
+auto.SendKeys("这个可以")</pre>
+        </div>
+
+        <div class="tip">
+            <strong>微信自动化提示：</strong>
+            <ul>
+                <li>确保微信已经登录并且窗口处于活动状态</li>
+                <li>操作之间可能需要适当的等待时间</li>
+                <li>某些操作可能需要根据实际界面调整定位方式</li>
+                <li>建议在执行自动化操作前先手动验证元素是否可以正确定位</li>
+            </ul>
+        </div>
+        
+        <h2>10. UI定位工具使用指南</h2>
+        <div class="code-block">
+            <pre>
+为开发微信RPA机器人，使用Trae开发的UI元素定位器，具有以下功能：
+
+1. 快捷键操作：
+   - F4：捕获当前鼠标位置的UI元素
+     * 按下F4后请保持鼠标静止不动
+     * 等待5秒钟，系统会自动完成元素捕获
+     * 捕获完成后会显示元素信息和定位代码
+   - F5：开启/关闭鼠标左键点击捕获模式
+   - F6：开启/关闭实时捕获模式
+
+2. 元素信息显示：
+   - 元素名称、类名、控件类型
+   - 元素位置信息
+   - 自动化ID和运行时ID
+   - 元素深度和XPath路径
+
+3. 代码生成：
+   - 自动生成UIAutomation定位代码
+   - 包含父窗口的完整定位链
+   - 简化版定位代码
+   - Pywinauto定位代码
+
+4. 实时测试功能：
+   - 支持多行代码测试
+   - 显示执行时间
+   - 支持UIAutomation和Pywinauto两种模式</pre>
+        </div>
+
+        <div class="warning">
+            <strong>F4捕获注意事项：</strong>
+            <ul>
+                <li>按下F4后请保持鼠标位置不要移动</li>
+                <li>等待5秒钟让系统完成元素分析</li>
+                <li>期间会有红色边框标记目标元素</li>
+                <li>捕获完成后会自动更新元素树和信息面板</li>
+            </ul>
+        </div>
+        <div class="tip">
+            <strong>使用技巧：</strong>
+            <ul>
+                <li>如果简单定位无法找到元素，可以使用父窗口链式定位</li>
+                <li>实时捕获模式适合分析复杂界面的元素层级</li>
+                <li>左键点击模式适合精确定位特定元素</li>
+                <li>定位代码生成后建议立即进行测试验证</li>
+                <li>注意某些应用可能有遮挡层，影响元素获取</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>注意事项：</strong>
+            <ul>
+                <li>使用F5左键点击模式时，确保目标窗口在最前面</li>
+                <li>某些元素可能需要特权模式才能访问</li>
+                <li>建议在测试环境中先进行验证</li>
+                <li>注意处理元素不存在的异常情况</li>
+            </ul>
+        </div>
+        </div>
+        
+        <!-- 添加开发者信息 -->
+        <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+            <p style="color: #666; font-size: 14px;">
+                开发者：新一<br>
+                联系邮箱：88120240@qq.com
+            </p>
+        </div>
+    </div>
+</body>
+</html>
