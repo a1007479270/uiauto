@@ -1,0 +1,4 @@
+uiautomation==3.0.4
+keyboard==0.13.5
+pywin32==306
+PyQt6==6.5.2
